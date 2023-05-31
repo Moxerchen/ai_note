@@ -40,6 +40,7 @@
 
 
 <script lang="ts">
+import '@/css/FormCss.css';
 import {computed, defineComponent, ref} from 'vue';
 import { NAutoComplete, NButton, NForm, NFormItem, NInput, NSpace, NIcon } from 'naive-ui';
 import { Email, Locked } from '@vicons/carbon';
@@ -49,7 +50,7 @@ export default defineComponent({
   setup(props, context) {
     const email = ref('');
     const password = ref('');
-    const suffixes = ['@gmail.com', '@qq.com', '@163.com', '@outlook.com', '@foxmail.com']
+    const suffixes = ['@gmail.com', '@qq.com', '@163.com', '@outlook.com', '@foxmail.com'];
 
     function handleLogin() {
       context.emit('login', email.value, password.value);
@@ -78,20 +79,5 @@ export default defineComponent({
     };
   },
 });
+
 </script>
-
-<style scoped>
-.input-spacing {
-  --n-label-height: 0 !important;
-}
-
-.centered-item {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.btn-space {
-  margin-right: 25px;
-}
-</style>

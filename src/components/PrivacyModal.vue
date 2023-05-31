@@ -1,5 +1,8 @@
 <template>
-  <n-button id="pd" color="#6495ED" text @click="showModal = true">隐私政策</n-button>
+  <n-row>
+    Copyright © 2023 AI Note •&nbsp;
+    <n-button color="#1E90FF" text @click="showModal = true">隐私政策</n-button>
+  </n-row>
   <n-modal
       :show="showModal"
       @update:show="showModal = $event"
@@ -11,10 +14,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { NModal, NButton } from 'naive-ui'
+import { NModal, NButton, NRow } from 'naive-ui'
 
 export default defineComponent({
-  components: { NModal, NButton },
+  components: { NModal, NButton, NRow },
   setup() {
 
     return {
@@ -23,9 +26,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-#pd {
-  margin-top: 10px;
-}
-</style>

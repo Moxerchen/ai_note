@@ -2,10 +2,18 @@
   <div class="login-page">
     <img src="../assets/logo.png" alt="Logo" class="logo">
     <LoginForm @login="handleLogin" @register="handleRegister" />
-  </div>
-  <div id="footer">
-    <PrivacyModal />
-    <n-button color="#6495ED" text @click="handleForgetPassword">忘记密码?</n-button>
+
+    <div id="footer">
+      <PrivacyModal />
+      <n-button
+          color="#1E90FF"
+          style="margin-bottom: 10px;"
+          text
+          @click="handleForgetPassword"
+      >
+        忘记密码
+      </n-button>
+    </div>
   </div>
 </template>
 
@@ -93,9 +101,10 @@ export default defineComponent({
 }
 
 #footer {
+  position: absolute;
+  bottom: 20px;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  height: 12vh;
 }
 </style>
