@@ -69,6 +69,7 @@
 </template>
 
 <script lang="ts">
+import '@/css/FormCss.css';
 import {computed, defineComponent, ref} from 'vue'
 import {NForm, NFormItem, NInput, NButton, NIcon, NAutoComplete,
   FormInst, FormItemInst, FormItemRule, useMessage, FormRules} from 'naive-ui'
@@ -224,19 +225,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped>
-.input-spacing {
-  --n-label-height: 0 !important;
-}
-
-.centered-item {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-}
-
-.btn-space {
-  margin-right: 25px;
-}
-</style>
