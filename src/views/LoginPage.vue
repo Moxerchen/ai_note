@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import {defineComponent, onMounted, ref} from 'vue';
 import LoginForm from '../components/LoginForm.vue';
 import PrivacyModal from "@/components/PrivacyModal.vue";
 import { useRouter } from 'vue-router';
@@ -36,6 +36,15 @@ export default defineComponent({
     const message = useMessage()
     const router = useRouter()
 
+    // 检测登录状态
+    onMounted(() => {
+      const isLogged: string | null = localStorage.getItem('isLogged');
+      if (isLogged && JSON.parse(isLogged)) {
+        router.push('/home');
+      }
+    });
+
+    // 登录
     const handleLogin = (email: string, password: string) => {
       const user: string | null = localStorage.getItem('UserInfo');
       const userList: UserInfoArray | null = user ? JSON.parse(user) : null;
@@ -57,10 +66,12 @@ export default defineComponent({
 
     }
 
+    // 注册
     const handleRegister = () => {
       router.push('/register');
     };
 
+    // 忘记密码
     const handleForgetPassword = () => {
       router.push('/forget-password');
     };
@@ -74,7 +85,6 @@ export default defineComponent({
       handleRegister,
       handleForgetPassword,
     };
-
 }
 });
 </script>

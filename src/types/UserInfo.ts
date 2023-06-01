@@ -7,7 +7,7 @@ interface Note {
 export interface UserInfo extends Note{
     email: string;
     password: string;
-    notes: Note[] | null;
+    notes?: Note[] | null;
     username: string;
     signature: string;
     isFirstLogin: boolean;

@@ -1,0 +1,124 @@
+<template>
+  <div class="verification-page">
+    <img src="../assets/logo.png" alt="Logo" class="logo">
+
+    <n-form :model="model">
+      <n-form-item class="input-spacing" path="verificationCode">
+        <n-input
+            v-model:value="model.verificationCode"
+            placeholder="请输入验证码"
+            :maxlength="6"
+            :allow-input="onlyAllowNumber"
+            round
+            size="large"
+            @keyup="verifyCode"
+        />
+      </n-form-item>
+
+      <n-form-item class="centered-item">
+        <n-button round size="large" class="large-button" @click="backLogin">取消</n-button>
+      </n-form-item>
+    </n-form>
+
+    <div id="footer">
+      <PrivacyModal />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import '@/css/FormCss.css';
+import PrivacyModal from "@/components/PrivacyModal.vue";
+import { defineComponent, ref } from 'vue'
+import { NButton, NForm, NInput, useMessage } from "naive-ui";
+import { RegisteredInfo } from "@/types/RegisteredInfo";
+import { useRouter } from "vue-router";
+import { UserInfo, UserInfoArray } from "@/types/UserInfo";
+
+export default defineComponent ({
+  components: { NButton, NForm, NInput, PrivacyModal },
+
+  setup() {
+    const message = useMessage()
+    const router = useRouter();
+    const model = ref({ verificationCode: '' });
+
+    const verifyCode = () => {
+      const value = model.value.verificationCode;
+      if (value.length === 6) {
+        const registeredUser: string | null = sessionStorage.getItem('registeredUser');
+        const registeredInfo: RegisteredInfo | null = registeredUser ? JSON.parse(registeredUser) : null;
+
+        if (registeredInfo && registeredInfo.verificationCode === value) {
+          const userInfo: string | null = localStorage.getItem('UserInfo');
+          let userList: UserInfoArray | null = userInfo ? JSON.parse(userInfo) : null;
+
+          if (userList == null) {
+            userList = new Array<UserInfo>();
+          }
+
+          const data: UserInfo = {
+            content: "", note_id: 0, title: "",
+            email: registeredInfo.email,
+            password: registeredInfo.password,
+            username: registeredInfo.email,
+            signature: "说点什么吧~",
+            isFirstLogin: true
+          }
+          userList.push(data);
+          localStorage.setItem('UserInfo', JSON.stringify(userList));
+          sessionStorage.removeItem('registeredUser');
+          message.success('注册成功');
+          router.push('/');
+        } else {
+          message.error('验证码不正确');
+        }
+      }
+    }
+
+    return {
+      model,
+      verifyCode,
+      onlyAllowNumber: (value: string) => {
+        return !value || /^\d+$/.test(value) && !value.startsWith(' ') && !value.endsWith(' ')
+      },
+      backLogin() {
+        router.push('/register');
+      }
+    };
+  }
+})
+</script>
+
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.verification-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 70px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 20px;
+}
+
+.large-button {
+  width: 80px;
+  margin-top: 40px;
+}
+</style>

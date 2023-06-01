@@ -53,7 +53,7 @@
     </n-form-item>
 
     <n-form-item class="centered-item">
-      <n-button round size="large" class="btn-space" type="info" @click="backLogin">取消</n-button>
+      <n-button round size="large" class="btn-space" @click="backLogin">取消</n-button>
       <n-button
           :disabled="model.email === null || model.password === null || model.reenteredPassword === null"
           type="info"
@@ -94,7 +94,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const suffixes = ['@gmail.com', '@qq.com', '@163.com', '@outlook.com', '@foxmail.com'];
+    const suffixes = ['@foxmail.com', '@qq.com', '@163.com', '@outlook.com', '@gmail.com'];
     const formRef = ref<FormInst | null>(null)
     const rPasswordFormItemRef = ref<FormItemInst | null>(null)
     const message = useMessage()
@@ -123,7 +123,6 @@ export default defineComponent({
         },
         {
           validator (rule: FormItemRule, value: string) {
-            console.log(value)
             if (value == null || value == '') return true
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailPattern.test(value);
@@ -144,7 +143,7 @@ export default defineComponent({
             const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[^]{6,16}$/;
             return passwordPattern.test(value);
           },
-          message: '密码格式不正确',
+          message: '必须包含字母和数字，且长度为6-16位',
           trigger: ['blur']
         }
       ],
@@ -162,6 +161,7 @@ export default defineComponent({
       ]
     }
 
+    // 邮箱验证码
     const register = () => {
       const serviceId = 'service_2s513li'
       const templateId = 'template_bqdwy0d'
@@ -192,6 +192,7 @@ export default defineComponent({
       rPasswordFormItemRef,
       model: modelRef,
       rules,
+      // 自定义触发器
       handlePasswordInput () {
         if (modelRef.value.reenteredPassword) {
           rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
@@ -208,19 +209,20 @@ export default defineComponent({
           }
         })
       }),
+      // 验证表单
       handleValidateButtonClick (e: MouseEvent) {
         e.preventDefault()
         formRef.value?.validate((errors) => {
           if (!errors) {
             register();
             message.success('验证码发送成功')
-            router.push('/nextPage');
-          } else {
-            console.log(errors)
-            message.error('验证码发送失败')
+            router.push('/verification');
           }
-        })
+        }).catch(() => message.error('请正确输入信息'));
       },
+      backLogin() {
+        router.push('/');
+      }
     }
   }
 })

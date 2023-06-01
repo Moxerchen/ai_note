@@ -50,7 +50,7 @@ export default defineComponent({
   setup(props, context) {
     const email = ref('');
     const password = ref('');
-    const suffixes = ['@gmail.com', '@qq.com', '@163.com', '@outlook.com', '@foxmail.com'];
+    const suffixes = ['@foxmail.com', '@qq.com', '@163.com', '@outlook.com', '@gmail.com'];
 
     function handleLogin() {
       context.emit('login', email.value, password.value);
