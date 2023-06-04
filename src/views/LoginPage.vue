@@ -18,12 +18,13 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {defineComponent, ref} from 'vue';
 import LoginForm from '../components/LoginForm.vue';
 import PrivacyModal from "@/components/PrivacyModal.vue";
 import { useRouter } from 'vue-router';
 import { useMessage, NButton } from 'naive-ui';
 import { UserInfoArray } from '@/types/UserInfo';
+import {useAuth} from "@/untils/useAuth";
 
 
 export default defineComponent({
@@ -37,12 +38,7 @@ export default defineComponent({
     const router = useRouter()
 
     // 检测登录状态
-    onMounted(() => {
-      const isLogged: string | null = localStorage.getItem('isLogged');
-      if (isLogged && JSON.parse(isLogged)) {
-        router.push('/home');
-      }
-    });
+    useAuth();
 
     // 登录
     const handleLogin = (email: string, password: string) => {
@@ -101,13 +97,13 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: 90vh;
 }
 
 .logo {
   width: 100px;
   height: 100px;
-  margin-bottom: 70px;
+  margin-bottom: 80px;
 }
 
 #footer {

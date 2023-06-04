@@ -31,9 +31,8 @@ import '@/css/FormCss.css';
 import PrivacyModal from "@/components/PrivacyModal.vue";
 import { defineComponent, ref } from 'vue'
 import { NButton, NForm, NInput, useMessage } from "naive-ui";
-import { RegisteredInfo } from "@/types/RegisteredInfo";
 import { useRouter } from "vue-router";
-import { UserInfo, UserInfoArray } from "@/types/UserInfo";
+import {ForgotInfo} from "@/types/ForgotInfo";
 import {useAuth} from "@/untils/useAuth";
 
 export default defineComponent ({
@@ -50,30 +49,12 @@ export default defineComponent ({
     const verifyCode = () => {
       const value = model.value.verificationCode;
       if (value.length === 6) {
-        const registeredUser: string | null = sessionStorage.getItem('registeredUser');
-        const registeredInfo: RegisteredInfo | null = registeredUser ? JSON.parse(registeredUser) : null;
+        const forgotUser: string | null = sessionStorage.getItem('forgotUser');
+        const forgotInfo : ForgotInfo | null = forgotUser ? JSON.parse(forgotUser) : null;
 
-        if (registeredInfo && registeredInfo.verificationCode === value) {
-          const userInfo: string | null = localStorage.getItem('UserInfo');
-          let userList: UserInfoArray | null = userInfo ? JSON.parse(userInfo) : null;
-
-          if (userList == null) {
-            userList = new Array<UserInfo>();
-          }
-
-          const data: UserInfo = {
-            content: "", note_id: 0, title: "",
-            email: registeredInfo.email,
-            password: registeredInfo.password,
-            username: registeredInfo.email,
-            signature: "说点什么吧~",
-            isFirstLogin: true
-          }
-          userList.push(data);
-          localStorage.setItem('UserInfo', JSON.stringify(userList));
-          sessionStorage.removeItem('registeredUser');
-          message.success('注册成功');
-          router.push('/');
+        if (forgotInfo && forgotInfo.verificationCode === value) {
+          message.success('验证成功');
+          router.push('/reset-password');
         } else {
           message.error('验证码不正确');
         }
@@ -87,7 +68,7 @@ export default defineComponent ({
         return !value || /^\d+$/.test(value) && !value.startsWith(' ') && !value.endsWith(' ')
       },
       backLogin() {
-        router.push('/register');
+        router.push('/forget-password');
       }
     };
   }

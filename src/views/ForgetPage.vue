@@ -1,7 +1,7 @@
 <template>
-  <div class="register-page">
+  <div class="forget-page">
     <img src="../assets/logo.png" alt="Logo" class="logo">
-    <RegisterForm />
+    <ForgetForm />
     <div id="footer">
       <PrivacyModal />
     </div>
@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import RegisterForm from '@/components/RegisterForm.vue'
 import PrivacyModal from "@/components/PrivacyModal.vue";
+import ForgetForm from "@/components/ForgetForm.vue";
 import {useAuth} from "@/untils/useAuth";
 
 export default defineComponent({
   components: {
+    ForgetForm,
     PrivacyModal,
-    RegisterForm
   },
 
   setup() {
@@ -34,7 +34,7 @@ export default defineComponent({
   box-sizing: border-box;
 }
 
-.register-page {
+.forget-page {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +45,7 @@ export default defineComponent({
 .logo {
   width: 100px;
   height: 100px;
-  margin: 30px 0 70px 0;
+  margin-bottom: 80px;
 }
 
 #footer {
