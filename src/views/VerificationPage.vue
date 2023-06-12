@@ -62,9 +62,9 @@ export default defineComponent ({
           }
 
           const data: UserInfo = {
-            content: "", note_id: 0, title: "",
             email: registeredInfo.email,
             password: registeredInfo.password,
+            notes: [],
             username: registeredInfo.email,
             signature: "说点什么吧~",
             isFirstLogin: true

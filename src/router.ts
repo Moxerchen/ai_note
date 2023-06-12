@@ -6,6 +6,7 @@ import ForgetPage from "@/views/ForgetPage.vue";
 import RetrievePage from "@/views/RetrievePage.vue";
 import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
 import HomePage from "@/views/HomePage.vue";
+import EditNotePage from "@/views/EditNotePage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -39,7 +40,12 @@ const router = createRouter({
             component: HomePage,
             meta: {
                 requiresAuth: true,
+                showFooter: true,
             }
+        },
+        {
+            path: '/edit-note',
+            component: EditNotePage,
         }
     ],
 });

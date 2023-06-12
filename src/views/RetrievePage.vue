@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import '@/css/FormCss.css';
+import "@/css/FormCss.css";
 import PrivacyModal from "@/components/PrivacyModal.vue";
 import { defineComponent, ref } from 'vue'
 import { NButton, NForm, NInput, useMessage } from "naive-ui";

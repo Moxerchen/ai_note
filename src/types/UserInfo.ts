@@ -1,13 +1,11 @@
-interface Note {
-    note_id: number;
-    title: string;
-    content: string;
-}
-
-export interface UserInfo extends Note{
+export interface UserInfo {
     email: string;
     password: string;
-    notes?: Note[] | null;
+    notes: {
+        title: string;
+        tags: string[];
+        content: string;
+    }[];
     username: string;
     signature: string;
     isFirstLogin: boolean;

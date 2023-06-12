@@ -52,6 +52,7 @@ export default defineComponent({
 
             message.success('登录成功');
             localStorage.setItem('isLogged', JSON.stringify(isLogged));
+            localStorage.setItem('currentUser', JSON.stringify(userList[i]));
             router.push('/home');
             return;
           } else if (i === userList.length - 1) {

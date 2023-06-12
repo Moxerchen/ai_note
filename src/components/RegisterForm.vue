@@ -76,6 +76,7 @@ import {NForm, NFormItem, NInput, NButton, NIcon, NAutoComplete,
 import { useRouter } from 'vue-router'
 import { Email, Locked } from '@vicons/carbon';
 import emailjs from 'emailjs-com'
+import {UserInfoArray} from "@/types/UserInfo";
 
 interface ModelType {
   email: string | null
@@ -125,9 +126,19 @@ export default defineComponent({
           validator (rule: FormItemRule, value: string) {
             if (value == null || value == '') return true
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailPattern.test(value);
+
+            const userInfo: string | null = localStorage.getItem('UserInfo');
+            let userList: UserInfoArray | null = userInfo ? JSON.parse(userInfo) : null;
+
+            if (userList) {
+              for (let i = 0; i < userList.length; i++) {
+                if (userList[i].email === value)
+                  return !emailPattern.test(value);
+              }
+            }
+            return true;
           },
-          message: '邮箱格式不正确',
+          message: '邮箱已注册或格式不正确',
           trigger: ['blur']
         }
       ],
