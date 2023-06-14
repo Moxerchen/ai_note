@@ -14,14 +14,11 @@
         <n-button
             quaternary
             style="font-size: 20px"
-            circle>
-          <n-icon :component="ArrowUndoOutline" />
-        </n-button>
-        <n-button
-            quaternary
-            style="font-size: 20px"
-            circle>
-          <n-icon :component="ArrowRedoOutline" />
+            circle
+            @click="handlePin"
+            :type= "isPinned ? 'warning' : 'default'"
+        >
+          <n-icon :component="isPinned ? Star : StarOutline" />
         </n-button>
         <n-button
             quaternary
@@ -38,7 +35,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { NButton, NSpace, NIcon } from 'naive-ui'
-import { ChevronBack, ArrowUndoOutline, ArrowRedoOutline, SaveOutline } from '@vicons/ionicons5'
+import { ChevronBack, Star, StarOutline, SaveOutline } from '@vicons/ionicons5'
 
 export default defineComponent({
   components: {
@@ -46,10 +43,20 @@ export default defineComponent({
     NSpace,
     NIcon
   },
-  emits: ['done', 'back'],
+  props: {
+    isPinned: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['done', 'pin', 'back'],
   setup(props, { emit }) {
     const handleBack = () => {
       emit('back')
+    }
+
+    const handlePin = () => {
+      emit('pin')
     }
 
     const handleDone = () => {
@@ -58,10 +65,11 @@ export default defineComponent({
 
     return {
       ChevronBack,
-      ArrowUndoOutline,
-      ArrowRedoOutline,
+      Star,
+      StarOutline,
       SaveOutline,
       handleBack,
+      handlePin,
       handleDone,
     }
   }
@@ -90,4 +98,7 @@ export default defineComponent({
   margin-right: 20px;
 }
 
+.active {
+  color: #e3cc56;
+}
 </style>

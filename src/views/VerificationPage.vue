@@ -65,7 +65,7 @@ export default defineComponent ({
             email: registeredInfo.email,
             password: registeredInfo.password,
             notes: [],
-            username: registeredInfo.email,
+            name: registeredInfo.email,
             signature: "说点什么吧~",
             isFirstLogin: true
           }

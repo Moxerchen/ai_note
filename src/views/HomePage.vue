@@ -42,11 +42,13 @@ import TopNavBar from "@/components/TopNavBar.vue";
 import {UserInfo} from "@/types/UserInfo";
 import router from "@/router";
 import {Edit, Delete} from "@vicons/carbon";
+import {useNewUser} from "@/untils/useNewUser";
 
 interface Note {
   title: string;
   tags: string[];
   content: string;
+  isPinned: boolean;
 }
 
 export default defineComponent({
@@ -62,6 +64,9 @@ export default defineComponent({
     NIcon,
   },
   setup() {
+    // 检测是否为新用户
+    useNewUser();
+
     const notes = ref<Note[]>([])
     const currentUser = localStorage.getItem('currentUser')
     const data: UserInfo = currentUser == null ? null : JSON.parse(currentUser)

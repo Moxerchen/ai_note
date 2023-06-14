@@ -1,25 +1,24 @@
 <template>
   <div class="bottom-nav-bar">
-
-    <n-button text style="font-size: 24px" @click="activePage='Home'" :class="{active: activePage==='Home'}">
+    <n-button text style="font-size: 24px" @click="navigateTo('Home')" :class="{active: activePage === 'Home'}">
       <n-icon :component="Home" />
     </n-button>
 
-    <n-button text style="font-size: 24px" @click="activePage='Book'" :class="{active: activePage==='Book'}">
+    <n-button text style="font-size: 24px" @click="navigateTo('Book')" :class="{active: activePage === 'Book'}">
       <n-icon :component="Book" />
     </n-button>
 
-    <n-button text style="font-size: 24px" @click="activePage='Person'" :class="{active: activePage==='Person'}">
+    <n-button text style="font-size: 24px" @click="navigateTo('Person')" :class="{active: activePage === 'Person'}">
       <n-icon :component="Person" />
     </n-button>
-
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import { defineComponent, ref } from "vue";
 import { NButton, NIcon } from "naive-ui";
 import { Home, Book, Person } from '@vicons/ionicons5';
+import router from "@/router";
 
 export default defineComponent({
   components: {
@@ -30,14 +29,20 @@ export default defineComponent({
   setup() {
     const activePage = ref('Home');
 
+    const navigateTo = (page: string) => {
+      activePage.value = page;
+      router.push(`/${page.toLowerCase()}`);
+    };
+
     return {
       Home,
       Book,
       Person,
       activePage,
-    }
-  }
-})
+      navigateTo,
+    };
+  },
+});
 </script>
 
 <style scoped>

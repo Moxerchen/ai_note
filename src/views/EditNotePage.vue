@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-spin :show="isLoading" size="large">
-      <EditTopNavBar @done="handleDone" @back="handleBack"/>
+      <EditTopNavBar :isPinned="isPinned" @pin="handlePin" @done="handleDone" @back="handleBack"/>
       <n-input
           class="input-box title-box"
           placeholder="标题"
@@ -42,8 +42,8 @@ import { defineComponent, ref } from 'vue'
 import {NInput, NSelect, NSpin, useMessage} from 'naive-ui'
 import router from "@/router";
 import EditTopNavBar from "@/components/EditTopNavBar.vue";
-import axios from 'axios';
 import EditBottomBtn from "@/components/EditBottomBtn.vue";
+import axios from 'axios';
 
 export default defineComponent({
   components: {
@@ -60,6 +60,7 @@ export default defineComponent({
     const title = ref(currentNote ? JSON.parse(currentNote).title : '')
     const tags = ref<string[]>(currentNote ? JSON.parse(currentNote).tags : [])
     const content = ref(currentNote ? JSON.parse(currentNote).content : '')
+    const isPinned = ref(currentNote ? JSON.parse(currentNote).isPinned : false)
     const isFocused = ref(false)
     const isLoading = ref(false)
 
@@ -68,11 +69,17 @@ export default defineComponent({
       router.back()
     }
 
+    const handlePin = () => {
+      isPinned.value = !isPinned.value
+      message.info(isPinned.value ? '已收藏' : '已取消收藏')
+    }
+
     const handleDone = () => {
       const note = {
         title: title.value,
         tags: tags.value,
-        content: content.value
+        content: content.value,
+        isPinned: isPinned.value,
       }
       if (note.title === '' && note.content === '' && note.tags.length === 0) {
         message.error('标题、标签和内容不能都为空')
@@ -98,11 +105,11 @@ export default defineComponent({
       router.push('/home')
     }
 
-    const openAI = async (prompt: string, max_tokens: number) => {
-      const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions',
+    const openAI = async (messages: Array<{role: string, content: string}>) => {
+      const response = await axios.post('https://api.openai.com/v1/chat/completions',
           {
-            prompt: prompt,
-            max_tokens: max_tokens
+            model: "gpt-3.5-turbo",
+            messages: messages
           },
           {
             headers: {
@@ -110,9 +117,10 @@ export default defineComponent({
               'Authorization': 'Bearer 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'
             }
           });
-      console.log(response.data)
-      return response.data.choices[0].text.trim();
+      console.log(response.data);
+      return response.data.choices[0].message.content;
     }
+
 
     // 打字机效果
     const typeWriterEffect = (text: string, textField: any) => {
@@ -131,19 +139,31 @@ export default defineComponent({
       const note = {
         title: title.value,
         tags: tags.value,
-        content: content.value
+        content: content.value,
+        isPinned: isPinned.value,
       }
 
       if (note.title === '' && note.content === '' && note.tags.length === 0) {
         message.error('标题、标签和内容不能都为空')
         return
       }
-      if (note.title !== '' && note.content !== '' && note.tags.length !== 0) {
-        message.info('没有需要AI分析的内容')
-        return
-      }
 
       isLoading.value = true;
+
+      if (note.title !== '' && note.content !== '') {
+        try {
+          const messages = [
+            {role: "system", content: "你是一个笔记助手。必须严格按照用户要求进行回答。"},
+            {role: "user", content: "使用中文，用最快的速度根据标题和内容续写一段内容，禁止使用MarkDown语法，这是标题: " + note.title
+                  + "。这是内容: " + note.content},
+          ];
+          const generatedText = await openAI(messages);
+          content.value += "\n\n [ AI NOTE GENERATION ] \n";
+          typeWriterEffect(generatedText, content);
+        } catch (error) {
+          message.error('OpenAI API error: ' + error);
+        }
+      }
 
       if(note.title === '') {
         try {
@@ -152,8 +172,11 @@ export default defineComponent({
             return
           }
 
-          const prompt = "使用中文，根据这段内容归纳一个标题，要求不使用主语，不超过十个字: " + note.content;
-          const generatedText = await openAI(prompt, 100);
+          const messages = [
+            {role: "system", content: "你是一个笔记助手。必须严格按照用户要求进行回答。"},
+            {role: "user", content: "使用中文，用最快的速度根据这段内容归纳一个标题，要求不使用主语，不超过十个字: " + note.content},
+          ];
+          const generatedText = await openAI(messages);
           title.value = "[AI] ";
           typeWriterEffect(generatedText, title);
         } catch (error) {
@@ -163,13 +186,19 @@ export default defineComponent({
 
       if(note.tags.length === 0) {
         try {
-          let prompt: string;
+          let messages: Array<{role: string, content: string}>;
           if (note.content === '')
-            prompt = "使用中文，为以下标题生成一个中文分类标签，最好为一个词汇，并严格要求不超过五个字，不含标点符号: " + note.title;
+            messages = [
+              {role: "system", content: "你是一个笔记助手。必须严格按照用户要求进行回答。"},
+              {role: "user", content: "使用中文，用最快的速度为以下标题生成一个中文分类标签，最好为一个词汇，并严格要求不超过五个字，不含标点符号: " + note.title},
+            ];
           else
-            prompt = "使用中文，为以下内容生成一个中文分类标签，最好为一个词汇，并严格要求不超过五个字，不含标点符号: " + note.content;
+            messages = [
+              {role: "system", content: "你是一个笔记助手。必须严格按照用户要求进行回答。"},
+              {role: "user", content: "使用中文，用最快的速度为以下内容生成一个中文分类标签，最好为一个词汇，并严格要求不超过五个字，不含标点符号: " + note.content},
+            ];
 
-          const generatedText = await openAI(prompt, 50);
+          const generatedText = await openAI(messages);
           tags.value = ["AI", generatedText];
         } catch (error) {
           message.error('OpenAI API error: ' + error);
@@ -177,15 +206,13 @@ export default defineComponent({
       }
 
       if(note.content === '') {
-        if(note.title === '') {
-          message.error('标题和内容不能都为空')
-          return
-        }
-
         try {
-          const prompt = "使用中文，根据标题生成一篇短篇教学式笔记，禁止使用MarkDown语法，严格要求少于600字: " + note.title;
-          const generatedText = await openAI(prompt, 2000);
-          content.value = "[AI NOTE GENERATION]\n";
+          const messages = [
+            {role: "system", content: "你是一个笔记助手。必须严格按照用户要求进行回答。"},
+            {role: "user", content: "使用中文，用最快的速度根据标题生成一篇短篇教学式笔记，禁止使用MarkDown语法: " + note.title},
+          ];
+          const generatedText = await openAI(messages);
+          content.value += " [ AI NOTE GENERATION ] \n";
           typeWriterEffect(generatedText, content);
         } catch (error) {
           message.error('OpenAI API error: ' + error);
@@ -199,8 +226,10 @@ export default defineComponent({
       title,
       tags,
       content,
+      isPinned,
       isFocused,
       handleBack,
+      handlePin,
       handleDone,
       handleAI,
       isLoading,

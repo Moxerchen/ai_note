@@ -7,6 +7,8 @@ import RetrievePage from "@/views/RetrievePage.vue";
 import ResetPasswordPage from "@/views/ResetPasswordPage.vue";
 import HomePage from "@/views/HomePage.vue";
 import EditNotePage from "@/views/EditNotePage.vue";
+import GuidePage from "@/views/GuidePage.vue";
+import NewUserPage from "@/views/NewUserPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -43,6 +45,30 @@ const router = createRouter({
                 showFooter: true,
             }
         },
+        {
+            path: '/guide',
+            component: GuidePage,
+        },
+        {
+            path: '/new-user',
+            component: NewUserPage,
+        },
+        // {
+        //     path: '/book',
+        //     component: HomePage,
+        //     meta: {
+        //         requiresAuth: true,
+        //         showFooter: true,
+        //     }
+        // },
+        // {
+        //     path: '/person',
+        //     component: PersonPage,
+        //     meta: {
+        //         requiresAuth: true,
+        //         showFooter: true,
+        //     }
+        // },
         {
             path: '/edit-note',
             component: EditNotePage,

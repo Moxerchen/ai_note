@@ -109,7 +109,7 @@ export default {
   width: 100%;
   z-index: 999;
   background-color: lightblue;
-  padding: 10px 0;
+  padding: 12px 0;
 
   display: flex;
   flex-direction: column;

@@ -5,8 +5,9 @@ export interface UserInfo {
         title: string;
         tags: string[];
         content: string;
+        isPinned: boolean;
     }[];
-    username: string;
+    name: string;
     signature: string;
     isFirstLogin: boolean;
 }
