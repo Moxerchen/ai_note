@@ -28,11 +28,9 @@ export default defineComponent({
     };
   },
   mounted() {
-    // this.questionText = this.$route.params.text;
     this.questionText = Array.isArray(this.$route.params.text)
-        ? this.$route.params.text[0] // Take the first element if it's an array
-        : this.$route.params.text;   // Use the value directly if it's a string
-    // this.questionDetails = this.getQuestionDetails(this.$route.params.text);
+        ? this.$route.params.text[0]
+        : this.$route.params.text;
     this.questionDetails = this.getQuestionDetails(this.questionText);
   },
   methods: {

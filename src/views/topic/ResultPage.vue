@@ -49,9 +49,7 @@ export default defineComponent({
     const isAnswerCorrect = (question: Question, selectedAnswer: number): boolean => {
       return selectedAnswer === question.answerIndex;
     };
-    // function getAlertType(question, selectedAnswer) {
-    //   return this.isAnswerCorrect(question, selectedAnswer) ? 'success' : 'error';
-    // }
+
     function getAlertType(question: Question, selectedAnswer: number): "success" | "error" {
       return isAnswerCorrect(question, selectedAnswer) ? 'success' : 'error';
     }
