@@ -1,6 +1,6 @@
 <template>
   <div class="verification-page">
-    <img src="../assets/logo.png" alt="Logo" class="logo">
+    <img src="../../assets/logo.png" alt="Logo" class="logo">
 
     <n-form :model="model">
       <n-form-item class="input-spacing" path="verificationCode">

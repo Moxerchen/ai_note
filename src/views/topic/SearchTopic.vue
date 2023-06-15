@@ -84,6 +84,7 @@ export default defineComponent({
 .label1{
   display:flex;
   left: 30px;
+  font-weight: normal;
 }
 .FirstDivider{
   height: 15px;
@@ -95,6 +96,7 @@ export default defineComponent({
 .label2{
   display: flex;
   margin-top: 10px;
+  font-weight: normal;
 }
 .firstButton{
   width: 120px;

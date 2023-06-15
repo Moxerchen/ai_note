@@ -1,6 +1,6 @@
 <template>
   <div class="new-user-page">
-    <img src="../assets/name.png" alt="name" class="name-logo">
+    <img src="../../assets/name.png" alt="name" class="name-logo">
     <n-h1 style="
       font-size: 24px;
       font-family: 'Comic Sans MS + YouYuan', serif;

@@ -80,7 +80,7 @@ export default defineComponent({
 
     const handleSearch = (value: string) => {
       // 更新notes，仅包含搜索结果
-      if (value == null && value === '')
+      if (value == null || value === '')
         notes.value = [...data.notes]
       else
         value = value.toUpperCase()

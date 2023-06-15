@@ -1,47 +1,48 @@
 <template>
- <div class="personalPage">
+  <div class="personalPage">
   <div class="container">
     <div class="image-section">
       <van-card class="custom-card">
         <template #title>
-          <div class="custom-title">西游记</div>
+          <div class="custom-title">红楼梦</div>
         </template>
         <template #desc>
-          <div class="custom-desc">中国古代第一部浪漫主义章回体长篇神魔小说</div>
+          <div class="custom-desc">原名《石头记》，是中国古代章回体长篇小说，中国古典四大名著之首</div>
         </template >
         <template #thumb>
-          <img src="../assets/xiyouji.png"  class="cardImg"/>
+          <img src="https://isbncoverdb.com/images/book-cover-book2394563.webp"  class="cardImg"/>
         </template>
       </van-card>
 
     </div>
 
     <div class="content-section">
-      <p class="jianjie">内容简介</p>
-      <p class="neirong">孙悟空出世，跟随菩提祖师学艺及大闹天宫后，遇见了唐僧、猪八戒、沙僧和白龙马，西行取经，一路上历经艰险，降妖除魔，经历了九九八十一难，终于到达西天见到如来佛祖，最终五圣成真的故事。该小说以“玄奘取经”这一历史事件为蓝本，经作者的艺术加工，深刻地描绘出明代百姓的社会生活状况。</p>
+      <h2>内容简介</h2>
+      <h4 style="font-weight: normal">小说以贾、史、王、薛四大家族的兴衰为背景，以富贵公子贾宝玉为视角，以贾宝玉与林黛玉、薛宝钗的爱情婚姻悲剧为主线，描绘了一些闺阁佳人的人生百态，展现了真正的人性美和悲剧美，是一部从各个角度展现女性美以及中国古代社会百态的史诗性著作。</h4>
     </div>
 
     <div class="red-section">
-      <p class="gass">猜你喜欢</p>
+      <h3>猜你喜欢</h3>
       <van-grid :border="false" :column-num="3">
         <van-grid-item text="???">
           <van-image
-              src="https://isbncoverdb.com/images/book-cover-book5-3473161.webp"
-          />
-        </van-grid-item>
-        <van-grid-item>
-          <van-image
-              src="https://isbncoverdb.com/images/book-cover-book22889066.webp"
-          />
-        </van-grid-item>
-        <van-grid-item>
-          <van-image
               src="https://isbncoverdb.com/images/book-cover-book27164383.webp"
+          />
+        </van-grid-item>
+        <van-grid-item>
+          <van-image
+              src="https://isbncoverdb.com/images/book-cover-book169851.webp"
+          />
+        </van-grid-item>
+        <van-grid-item>
+          <van-image
+              src="https://isbncoverdb.com/images/book-cover-book5-3473161.webp"
           />
         </van-grid-item>
       </van-grid>
 
     </div>
+  </div>
 
     <van-sticky v-model="isSticky" :offset-bottom="0">
       <div class="bottom-bar1">
@@ -49,11 +50,10 @@
       </div>
       <div class="bottom-bar" >
         <span @click="goBack">&lt;</span>
-        <span @click="MoreInfo">&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span>&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       </div>
     </van-sticky>
   </div>
- </div>
   <!--  wellhu -->
 </template>
 
@@ -74,15 +74,15 @@ export default {
     const router = useRouter();
 
     function MoreInfo(){
-      router.go(-1)
+      router.push('/Book')
     }
 
     function goBack(){
-      router.push('BookList')
+      router.go(-1)
     }
 
     function toBook(){
-      router.push('/BookPage')
+      router.push('/Book')
     }
 
     return {
@@ -97,18 +97,10 @@ export default {
 </script>
 
 <style scoped>
-.jianjie{
-  font-size: 24px;
-}
-.neirong{
-  font-size: 16px;
-}
-.gass{
-  font-size: 18.72px;
-}
 .personalPage{
   padding: 16px;
 }
+
 .custom-card{
   height: 100%;
 }
@@ -124,7 +116,7 @@ export default {
 }
 
 .custom-desc {
-  font-size: 16px !important;
+  font-size: 16px;
   margin-left: 15px;
 }
 
@@ -159,14 +151,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0px;
+  padding: 0 10px;
   color: #2b2b2b;
   box-shadow: 0 0 5px ghostwhite;
 }
 
 .bottom-button {
   width: 95%;
-  left: 10px;
   height: 25px;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <img src="../assets/logo.png" alt="Logo" class="logo">
+    <img src="../../assets/logo.png" alt="Logo" class="logo">
     <LoginForm @login="handleLogin" @register="handleRegister" />
 
     <div id="footer">
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
-import LoginForm from '../components/LoginForm.vue';
+import LoginForm from '../../components/LoginForm.vue';
 import PrivacyModal from "@/components/PrivacyModal.vue";
 import { useRouter } from 'vue-router';
 import { useMessage, NButton } from 'naive-ui';

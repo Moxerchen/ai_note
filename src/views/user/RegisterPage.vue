@@ -1,7 +1,7 @@
 <template>
-  <div class="reset-password-page">
-    <img src="../assets/logo.png" alt="Logo" class="logo">
-    <ResetPasswordForm/>
+  <div class="register-page">
+    <img src="../../assets/logo.png" alt="Logo" class="logo">
+    <RegisterForm />
     <div id="footer">
       <PrivacyModal />
     </div>
@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import RegisterForm from '@/components/RegisterForm.vue'
 import PrivacyModal from "@/components/PrivacyModal.vue";
-import ResetPasswordForm from "@/components/ResetPasswordForm.vue";
 import {useAuth} from "@/untils/useAuth";
 
 export default defineComponent({
   components: {
-    ResetPasswordForm,
     PrivacyModal,
+    RegisterForm
   },
 
   setup() {
@@ -34,7 +34,7 @@ export default defineComponent({
   box-sizing: border-box;
 }
 
-.reset-password-page {
+.register-page {
   display: flex;
   flex-direction: column;
   align-items: center;

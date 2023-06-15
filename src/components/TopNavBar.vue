@@ -54,7 +54,8 @@ export default {
 
     const handleUpdate = (value) => {
       searchInput.value = value
-      value = value.toUpperCase()
+      if (value !== null && value !== '')
+        value = value.toUpperCase()
 
       const currentUser = localStorage.getItem('currentUser')
       const data = JSON.parse(currentUser)
