@@ -115,7 +115,7 @@ export default defineComponent({
           {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer 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'
+              'Authorization': 'Bearer '
             }
           });
       console.log(response.data);
