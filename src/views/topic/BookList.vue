@@ -94,9 +94,9 @@ export default {
     ];
 
     const activeCardGroup = computed(() => {
-      return cardGroups.find(group => group.key == activeKey.value) || { cards: [{ id: 5, title: 'Card 3.1',desc:'cnmlgb2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },
-          { id: 6, title: 'Card 3.2',desc:'cnmlgb2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },
-          { id: 7, title: 'Card 3.3',desc:'cnmlgb2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },] };
+      return cardGroups.find(group => group.key == activeKey.value) || { cards: [{ id: 5, title: 'Card 3.1',desc:'错误2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },
+          { id: 6, title: 'Card 3.2',desc:'错误2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },
+          { id: 7, title: 'Card 3.3',desc:'错误2' ,thumb:'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg' },] };
     });
 
     const handleSidebarChange = (key: string) => {
