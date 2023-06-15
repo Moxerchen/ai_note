@@ -52,12 +52,6 @@ export default defineComponent({
 
     const handleNext = () => {
       if (currentStep.value > 3) {
-        const currentUser: string | null = localStorage.getItem('currentUser');
-        if (currentUser) {
-          const user = JSON.parse(currentUser);
-          user.isFirstLogin = false;
-          localStorage.setItem('currentUser', JSON.stringify(user));
-        }
         router.push('/new-user');
       } else
         currentStep.value++;

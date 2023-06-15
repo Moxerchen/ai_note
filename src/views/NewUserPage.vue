@@ -26,10 +26,9 @@
         round
         size="large"
         type="primary"
-        :disabled="model.userName === null"
         class="btn-user-name"
     >
-      下一步
+      出发！
     </n-button>
   </div>
 </template>
@@ -86,6 +85,7 @@ export default defineComponent({
           if (currentUser) {
             const user = JSON.parse(currentUser);
             user.name = model.value.userName;
+            user.isFirstLogin = false;
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
           message.success('恭喜您加入AI Note的大家庭！')
@@ -122,7 +122,7 @@ export default defineComponent({
 
 .btn-user-name {
   position: absolute;
-  bottom: 10%;
+  bottom: 15%;
   font-family: '微软雅黑 Light',serif;
 }
 </style>

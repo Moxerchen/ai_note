@@ -1,5 +1,5 @@
 <template>
-  <TopNavBar @onSearch="handleSearch" @on-add="handleAdd" />
+  <TopNavBar @onSearch="handleSearch" @on-add="handleAdd" @on-pin="handlePin" />
   <n-list hoverable>
     <n-list-item v-for="(note, index) in notes" :key="index">
       <n-thing :title="note.title" content-style="margin-top: 10px;">
@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { NList, NListItem, NThing, NSpace, NTag, NEllipsis, NButton, NIcon } from 'naive-ui'
+import {NList, NListItem, NThing, NSpace, NTag, NEllipsis, NButton, NIcon, useMessage} from 'naive-ui'
 import TopNavBar from "@/components/TopNavBar.vue";
 import {UserInfo} from "@/types/UserInfo";
 import router from "@/router";
@@ -67,9 +67,12 @@ export default defineComponent({
     // 检测是否为新用户
     useNewUser();
 
+    const message = useMessage()
+
     const notes = ref<Note[]>([])
     const currentUser = localStorage.getItem('currentUser')
     const data: UserInfo = currentUser == null ? null : JSON.parse(currentUser)
+    const displayPin = ref(false)
 
     onMounted(() => {
       notes.value = [...data.notes]
@@ -87,6 +90,19 @@ export default defineComponent({
           (note.tags && Array.isArray(note.tags) && note.tags.some(tag => tag.toUpperCase().includes(value))) ||
           note.content.toUpperCase().includes(value)
       )
+    }
+
+    const handlePin = () => {
+      if (displayPin.value) {
+        notes.value = data.notes
+        message.info('平平淡淡才是真~🎈')
+      }
+      else {
+        notes.value = data.notes.filter(note => note.isPinned)
+        message.info('哇，宝藏笔记！🎁')
+      }
+
+      displayPin.value = !displayPin.value
     }
 
     const editNote = (note: Note) => {
@@ -111,6 +127,7 @@ export default defineComponent({
       notes,
       handleSearch,
       handleAdd,
+      handlePin,
       editNote,
       delNote,
     }

@@ -9,6 +9,7 @@ import HomePage from "@/views/HomePage.vue";
 import EditNotePage from "@/views/EditNotePage.vue";
 import GuidePage from "@/views/GuidePage.vue";
 import NewUserPage from "@/views/NewUserPage.vue";
+import PersonalPage from "@/views/PersonalPage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -61,14 +62,14 @@ const router = createRouter({
         //         showFooter: true,
         //     }
         // },
-        // {
-        //     path: '/person',
-        //     component: PersonPage,
-        //     meta: {
-        //         requiresAuth: true,
-        //         showFooter: true,
-        //     }
-        // },
+        {
+            path: '/person',
+            component: PersonalPage,
+            meta: {
+                requiresAuth: true,
+                showFooter: true,
+            }
+        },
         {
             path: '/edit-note',
             component: EditNotePage,
