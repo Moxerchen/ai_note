@@ -9,6 +9,7 @@ import HomePage from "@/views/HomePage.vue";
 import EditNotePage from "@/views/EditNotePage.vue";
 import GuidePage from "@/views/GuidePage.vue";
 import NewUserPage from "@/views/NewUserPage.vue";
+import PersonalPage from "@/views/PersonalPage.vue";
 
 import SearchPage from './views/SearchPage.vue';
 import SearchTopic from './views/SearchTopic.vue';
@@ -131,14 +132,14 @@ const router = createRouter({
             name: 'QuestionDetail',
             component: QuestionDetail,
         },
-        // {
-        //     path: '/person',
-        //     component: PersonPage,
-        //     meta: {
-        //         requiresAuth: true,
-        //         showFooter: true,
-        //     }
-        // },
+        {
+            path: '/person',
+            component: PersonalPage,
+            meta: {
+                requiresAuth: true,
+                showFooter: true,
+            }
+        },
         {
             path: '/edit-note',
             component: EditNotePage,

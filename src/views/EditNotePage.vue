@@ -57,10 +57,10 @@ export default defineComponent({
     const message = useMessage()
     const currentNote = sessionStorage.getItem('currentNote');
 
-    const title = ref(currentNote ? JSON.parse(currentNote).title : '')
+    const title = ref<string | null>(currentNote ? JSON.parse(currentNote).title : '')
     const tags = ref<string[]>(currentNote ? JSON.parse(currentNote).tags : [])
-    const content = ref(currentNote ? JSON.parse(currentNote).content : '')
-    const isPinned = ref(currentNote ? JSON.parse(currentNote).isPinned : false)
+    const content = ref<string | null>(currentNote ? JSON.parse(currentNote).content : '')
+    const isPinned = ref<boolean | null>(currentNote ? JSON.parse(currentNote).isPinned : false)
     const isFocused = ref(false)
     const isLoading = ref(false)
 
@@ -72,6 +72,7 @@ export default defineComponent({
     const handlePin = () => {
       isPinned.value = !isPinned.value
       message.info(isPinned.value ? '已收藏' : '已取消收藏')
+      
     }
 
     const handleDone = () => {
@@ -128,6 +129,7 @@ export default defineComponent({
       let typing = setInterval(() => {
         if (i < text.length) {
           textField.value += text.charAt(i);
+          window.scrollTo(0, window.scrollY + 100);
           i++;
         } else {
           clearInterval(typing);
@@ -161,7 +163,7 @@ export default defineComponent({
           content.value += "\n\n [ AI NOTE GENERATION ] \n";
           typeWriterEffect(generatedText, content);
         } catch (error) {
-          message.error('OpenAI API error: ' + error);
+          message.error('网络错误: ' + error);
         }
       }
 
@@ -180,7 +182,7 @@ export default defineComponent({
           title.value = "[AI] ";
           typeWriterEffect(generatedText, title);
         } catch (error) {
-          message.error('OpenAI API error: ' + error);
+          message.error('网络错误: ' + error);
         }
       }
 
@@ -201,7 +203,7 @@ export default defineComponent({
           const generatedText = await openAI(messages);
           tags.value = ["AI", generatedText];
         } catch (error) {
-          message.error('OpenAI API error: ' + error);
+          message.error('网络错误: ' + error);
         }
       }
 
@@ -215,7 +217,7 @@ export default defineComponent({
           content.value += " [ AI NOTE GENERATION ] \n";
           typeWriterEffect(generatedText, content);
         } catch (error) {
-          message.error('OpenAI API error: ' + error);
+          message.error('网络错误: ' + error);
         }
       }
 

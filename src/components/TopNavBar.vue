@@ -5,7 +5,7 @@
       <n-button
           quaternary
           style="font-size: 24px"
-          @click="scrollToTop"
+          @click="handlePin"
       >
         <n-icon :component="Bookmarks" />
       </n-button>
@@ -46,7 +46,7 @@ export default {
     NButton,
     NIcon,
   },
-  emits: ['onSearch', 'onAdd'],
+  emits: ['onSearch', 'onAdd', 'onPin'],
   setup(props, { emit }) {
     const searchInput = ref('')
     const options = ref([])
@@ -76,11 +76,8 @@ export default {
       emit('onAdd')
     }
 
-    const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+    const handlePin = () => {
+      emit('onPin')
     }
 
     return {
@@ -91,7 +88,7 @@ export default {
       options,
       handleUpdate,
       handleAdd,
-      scrollToTop,
+      handlePin,
       selectedValue
     }
   }
